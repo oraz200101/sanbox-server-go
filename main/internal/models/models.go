@@ -1,11 +1,9 @@
 package models
 
-import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
-)
+import "go.mongodb.org/mongo-driver/v2/bson"
 
 type TypeModel struct {
-	ID        primitive.ObjectID
+	ID        bson.ObjectID
 	StrField  string
 	BoolField bool
 	IntField  int
