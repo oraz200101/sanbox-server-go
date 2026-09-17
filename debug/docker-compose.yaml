@@ -83,7 +83,7 @@ services:
 
   kf:
     container_name: sandbox-kf
-    image: bitnami/kafka:3.2.1
+    image: bitnamilegacy/kafka:3.2.1
     mem_limit: 1G
     restart: always
     ports:
@@ -131,7 +131,7 @@ services:
 
   es:
     container_name: sandbox-es
-    image: elasticsearch:7.12.1
+    image: elasticsearch:8.14.0
     mem_limit: 3000M
     restart: always
     ports:

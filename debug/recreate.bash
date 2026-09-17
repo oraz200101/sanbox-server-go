@@ -6,7 +6,7 @@ VOLUMES="$HOME/volumes/sandbox"
 
 docker-compose down
 
-docker run --rm -v "$VOLUMES/:/data" \
+MSYS_NO_PATHCONV=1 docker run --rm -v "$VOLUMES/:/data" \
        busybox:1.28 \
        find /data -mindepth 1 -maxdepth 1 -exec \
        rm -rf {} \;

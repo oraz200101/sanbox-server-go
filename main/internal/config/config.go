@@ -63,7 +63,7 @@ func Load() (*Config, error) {
 			Port:     getEnvInt("DB_PORT", 12218),
 			User:     getEnv("DB_USER", "postgres"),
 			Password: os.Getenv("DB_PASSWORD"),
-			Name:     getEnv("DB_NAME", "sandbox"),
+			Name:     getEnv("DB_NAME", "sandbox_db"),
 		},
 		DBMongo: struct {
 			Host string

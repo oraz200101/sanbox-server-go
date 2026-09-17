@@ -36,5 +36,5 @@ func NewMongoDBClient(cfg *config.Config) (*MongoDBClient, error) {
 }
 
 func (m *MongoDBClient) Close() error {
-	return nil
+	return m.client.Disconnect(context.Background())
 }

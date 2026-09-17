@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	_ "github.com/lib/pq"
 	"github.com/oraz200101/sandbox-server/main/internal/config"
 )
 
