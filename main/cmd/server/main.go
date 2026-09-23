@@ -11,9 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/oraz200101/sandbox-server/main/internal/broker"
+	"github.com/oraz200101/sandbox-server/main/internal/client"
 	"github.com/oraz200101/sandbox-server/main/internal/config"
 	"github.com/oraz200101/sandbox-server/main/internal/database"
+	"github.com/oraz200101/sandbox-server/main/internal/messaging"
 )
 
 func main() {
@@ -31,6 +32,9 @@ func main() {
 	defer pgClient.Close()
 	log.Println("✓ PostgreSQL connected")
 
+	pgClient.Migrate()
+	log.Println("✓ PostgreSQL migrated")
+
 	mongoClient, err := database.NewMongoDBClient(cfg)
 	if err != nil {
 		log.Fatal("mongodb connection failed:", err)
@@ -38,7 +42,7 @@ func main() {
 	defer mongoClient.Close()
 	log.Println("✓ MongoDB connected")
 
-	kafkaClient, err := broker.NewKafkaClient(cfg)
+	kafkaClient, err := messaging.NewKafkaClient(cfg)
 	if err != nil {
 		log.Fatal("kafka connection failed:", err)
 	}
@@ -51,6 +55,13 @@ func main() {
 	}
 	defer esClient.Close()
 	log.Println("✓ Elasticsearch connected")
+
+	client := client.Client{
+		KafkaClient:         kafkaClient,
+		MongoDBClient:       mongoClient,
+		PostgresClient:      pgClient,
+		ElasticSearchClient: esClient,
+	}
 
 	log.Println("All services ready!")
 

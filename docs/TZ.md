@@ -355,7 +355,7 @@ CONFIG_DIR=./configs
 Строго в этом порядке:
 1. Прочитать env, поднять логгер (`log/slog`, JSON).
 2. **Ждать готовности зависимостей**: цикл раз в 1 с, пока не ответит ES (`GET /`); расширить на Postgres и Mongo (в оригинале только ES).
-3. Прогнать SQL-миграции (`goose` или `golang-migrate`, каталог `migrations/`).
+3. Прогнать SQL-миграции (`goose` или `golang-migrate`, каталог `../main/internal/database/migrations/`).
 4. Создать индексы ES, если не существуют (`HEAD /<index>` → `PUT`).
 5. Запустить Kafka-консьюмеры (по горутине на топик).
 6. Запустить планировщик (§9).
@@ -375,7 +375,7 @@ CONFIG_DIR=./configs
 | Область | Решение |
 |---|---|
 | Go | 1.26 (`~/sdk/go1.26.4`), модули, `go vet` + `staticcheck` чисто |
-| Layout | `cmd/{server,migrate,gen-cia}`, `internal/{customer,charm,testmodela,migration,report}` (по домену), `internal/platform/{mongo,kafka,es,pg,config,sched}` (адаптеры), `migrations/`, `configs/`, `deploy/docker-compose.yml` |
+| Layout | `cmd/{server,migrate,gen-cia}`, `internal/{customer,charm,testmodela,migration,report}` (по домену), `internal/platform/{mongo,kafka,es,pg,config,sched}` (адаптеры), `../main/internal/database/migrations/`, `configs/`, `deploy/docker-compose.yml` |
 | Архитектура | domain-типы и интерфейсы портов в пакете домена; адаптеры реализуют интерфейсы; хендлеры зависят только от сервиса. Никаких глобальных синглтонов кроме логгера |
 | HTTP | `net/http` + `ServeMux` с паттернами методов (Go 1.22+), без фреймворка. Middleware: recover, request-id, логирование, CORS `*` |
 | Mongo | `go.mongodb.org/mongo-driver/v2` |
